@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "component": {
+      "description": "Create an Avrios component",
+      "factory": "./component",
+      "schema": "./component/schema.json"
+    }
+  }
+}
