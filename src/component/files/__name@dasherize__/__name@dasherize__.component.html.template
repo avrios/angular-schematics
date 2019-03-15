@@ -1,0 +1,3 @@
+<div class="<%= dasherize(name) %>">
+    <%= classify(name) %>Component
+</div>
