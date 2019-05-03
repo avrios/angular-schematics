@@ -5,6 +5,11 @@
       "description": "Create an Avrios component",
       "factory": "./component",
       "schema": "./component/schema.json"
+    },
+    "component2": {
+      "description": "Create an Avrios component (Ng2)",
+      "factory": "./component2",
+      "schema": "./component2/schema.json"
     }
   }
 }
