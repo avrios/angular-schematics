@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { IComponentOptions, IController } from 'angular';
 
-@Component({
-    selector: '<%= selector %>',
-    templateUrl: './<%= dasherize(name) %>.component.html',
-    styleUrls: ['./<%= dasherize(name) %>.component.scss']
-})
-export class <%= classify(name) %>Component implements OnInit {
+import './<%= dasherize(name) %>.scss';
+
+class <%= classify(name) %>Controller implements IController {
     constructor() {
-        //
+        'ngInject';
     }
 
-    public ngOnInit(): void {
+    public $onInit(): void {
         //
     }
 }
+
+export const <%= classify(name) %>Component: IComponentOptions = {
+    bindings: {
+        //
+    },
+    controller: <%= classify(name) %>Controller,
+    controllerAs: 'vm',
+    templateUrl: './<%= dasherize(name) %>.html'
+};
