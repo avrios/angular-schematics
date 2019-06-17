@@ -10,6 +10,11 @@
       "description": "Create an Avrios component (Ng2)",
       "factory": "./component2",
       "schema": "./component2/schema.json"
+    },
+    "modal2": {
+      "description": "Create an Avrios modal (Ng2)",
+      "factory": "./modal2",
+      "schema": "./modal2/schema.json"
     }
   }
 }

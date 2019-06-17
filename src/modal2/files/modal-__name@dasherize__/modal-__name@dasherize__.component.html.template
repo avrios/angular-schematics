@@ -1,0 +1,9 @@
+<avr-modal class="modal-<%= dasherize(name) %>">
+    <avr-modal-header>
+        <h4 class="modal-title"></h4>
+    </avr-modal-header>
+
+    <avr-modal-body>
+
+    </avr-modal-body>
+</avr-modal>

@@ -1,0 +1,21 @@
+import { Component, OnInit } from '@angular/core';
+
+import { AbstractModal } from 'shared/app/modals/abstract-modal.class';
+
+export interface Modal<%= classify(name) %>Resolve {
+    test: string;
+}
+
+@Component({
+    templateUrl: './modal-<%= dasherize(name) %>.component.html',
+    styleUrls: ['./modal-<%= dasherize(name) %>.component.scss']
+})
+export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve> implements OnInit {
+    constructor() {
+        super();
+    }
+
+    public ngOnInit(): void {
+        //
+    }
+}
