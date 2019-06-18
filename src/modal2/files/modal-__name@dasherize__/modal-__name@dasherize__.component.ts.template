@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractModal } from 'shared/app/modals/abstract-modal.class';
 
 export interface Modal<%= classify(name) %>Resolve {
-    test: string;
+    //
 }
 
 @Component({
