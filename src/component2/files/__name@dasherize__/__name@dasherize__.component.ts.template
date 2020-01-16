@@ -1,16 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: '<%= selector %>',
     templateUrl: './<%= dasherize(name) %>.component.html',
     styleUrls: ['./<%= dasherize(name) %>.component.scss']
 })
-export class <%= classify(name) %>Component implements OnInit {
+export class <%= classify(name) %>Component implements OnDestroy, OnInit {
+    private readonly ngOnDestroy$ = new Subject<void>();
+
     constructor() {
         //
     }
 
     public ngOnInit(): void {
         //
+    }
+
+    public ngOnDestroy(): void {
+        this.ngOnDestroy$.next();
+        this.ngOnDestroy$.complete();
     }
 }
