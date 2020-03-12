@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { AbstractModal } from 'shared/app/modals/abstract-modal.class';
+import { AbstractModal } from '@shared/modals/abstract-modal.class';
 
 export interface Modal<%= classify(name) %>Resolve {
     //
@@ -8,7 +8,8 @@ export interface Modal<%= classify(name) %>Resolve {
 
 @Component({
     templateUrl: './modal-<%= dasherize(name) %>.component.html',
-    styleUrls: ['./modal-<%= dasherize(name) %>.component.scss']
+    styleUrls: ['./modal-<%= dasherize(name) %>.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve> implements OnInit {
     constructor() {
