@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: '<%= selector %>',
@@ -7,19 +6,14 @@ import { Subject } from 'rxjs';
     styleUrls: ['./<%= dasherize(name) %>.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class <%= classify(name) %>Component implements OnDestroy, OnInit {
-    private readonly ngOnDestroy$ = new Subject<void>();
+export class <%= classify(name) %>Component {
+    // @ObserveOnDestroy()
+    // private readonly ngOnDestroy$: Observable<void>;
+
+    // @ObserveOnInit()
+    // private readonly ngOnInit$: Observable<void>;
 
     constructor() {
         //
-    }
-
-    public ngOnInit(): void {
-        //
-    }
-
-    public ngOnDestroy(): void {
-        this.ngOnDestroy$.next();
-        this.ngOnDestroy$.complete();
     }
 }
