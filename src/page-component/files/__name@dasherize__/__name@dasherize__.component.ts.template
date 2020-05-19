@@ -9,7 +9,7 @@ import { BaseRouteController } from '@shared/core/base-route.controller';
     styleUrls: ['./<%= dasherize(name) %>.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class <%= classify(name) %>Component {
+export class <%= classify(name) %>Component extends BaseRouteController {
     protected readonly pageTitle = [];
 
     // @ObserveOnDestroy()
