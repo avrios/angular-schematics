@@ -15,6 +15,11 @@
       "description": "Create an Avrios modal",
       "factory": "./modal",
       "schema": "./modal/schema.json"
+    },
+    "page-component": {
+      "description": "Create an Avrios page component",
+      "factory": "./page-component",
+      "schema": "./page-component/schema.json"
     }
   }
 }
