@@ -1,5 +1,0 @@
-@import 'shared/styles/component-common';
-
-.<%= dasherize(name) %> {
-  //
-}
