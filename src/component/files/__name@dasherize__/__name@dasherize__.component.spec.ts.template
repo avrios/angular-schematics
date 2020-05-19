@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { SharedCommonsModule } from '@shared/shared-commons.module';
+
 import { <%= classify(name) %>Component } from './<%= dasherize(name) %>.component';
 
 describe('<%= classify(name) %>Component', () => {
@@ -8,7 +10,10 @@ describe('<%= classify(name) %>Component', () => {
 
     beforeEach(async(() => {
         const testModuleConfig = {
-            declarations: [<%= classify(name) %>Component]
+            declarations: [<%= classify(name) %>Component],
+            imports: [
+                SharedCommonsModule
+            ]
         };
 
         TestBed.configureTestingModule(testModuleConfig)
