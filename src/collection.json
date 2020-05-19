@@ -6,15 +6,15 @@
       "factory": "./api-service",
       "schema": "./api-service/schema.json"
     },
-    "component2": {
-      "description": "Create an Avrios component (Ng2)",
-      "factory": "./component2",
-      "schema": "./component2/schema.json"
+    "component": {
+      "description": "Create an Avrios component",
+      "factory": "./component",
+      "schema": "./component/schema.json"
     },
-    "modal2": {
-      "description": "Create an Avrios modal (Ng2)",
-      "factory": "./modal2",
-      "schema": "./modal2/schema.json"
+    "modal": {
+      "description": "Create an Avrios modal",
+      "factory": "./modal",
+      "schema": "./modal/schema.json"
     }
   }
 }
