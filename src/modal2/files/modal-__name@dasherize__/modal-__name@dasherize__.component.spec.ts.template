@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SharedModalsNg2Module } from 'shared/app/modals/modals.module';
+import { SharedCommonsModule } from '@shared/shared-commons.module';
 
 import { Modal<%= classify(name) %>Component } from './modal-<%= dasherize(name) %>.component';
 
@@ -14,7 +14,7 @@ describe('Modal<%= classify(name) %>Component', () => {
                 Modal<%= classify(name) %>Component
             ],
             imports: [
-                SharedModalsNg2Module
+                SharedCommonsModule
             ]
         };
 
