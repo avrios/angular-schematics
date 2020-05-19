@@ -1,17 +1,30 @@
 import { strings } from '@angular-devkit/core';
-import { Rule, SchematicsException, Tree, apply, applyTemplates, chain, mergeWith, move, url } from '@angular-devkit/schematics';
+import {
+    Rule,
+    SchematicsException,
+    Tree,
+    apply,
+    applyTemplates,
+    chain,
+    mergeWith,
+    move,
+    url,
+    filter,
+    noop
+} from '@angular-devkit/schematics';
 
 import { parseName } from '../utilities/parse-name';
 import { buildDefaultPath, getProject } from '../utilities/project';
 import { validateName } from '../utilities/validation';
 
-interface ComponentOptions {
+interface ServiceOptions {
     name: string;
     path: string;
     project: string;
+    skipTests?: boolean;
 }
 
-export default function (options: ComponentOptions): Rule {
+export default function (options: ServiceOptions): Rule {
     return (host: Tree) => {
         if (!options.project) {
             throw new SchematicsException('Option (project) is required.');
@@ -30,6 +43,7 @@ export default function (options: ComponentOptions): Rule {
         validateName(options.name);
 
         const templateSource = apply(url('./files'), [
+            options.skipTests ? filter(path => !path.endsWith('.spec.ts.template')) : noop(),
             applyTemplates({
                 ...strings,
                 ...options,

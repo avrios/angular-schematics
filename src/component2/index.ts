@@ -1,5 +1,17 @@
 import { strings } from '@angular-devkit/core';
-import { Rule, SchematicsException, Tree, apply, applyTemplates, chain, mergeWith, move, url } from '@angular-devkit/schematics';
+import {
+    Rule,
+    SchematicsException,
+    Tree,
+    apply,
+    applyTemplates,
+    chain,
+    mergeWith,
+    move,
+    url,
+    filter,
+    noop
+} from '@angular-devkit/schematics';
 
 import { parseName } from '../utilities/parse-name';
 import { buildDefaultPath, getProject } from '../utilities/project';
@@ -11,6 +23,7 @@ interface ComponentOptions {
     prefix?: string;
     project: string;
     selector?: string;
+    skipTests?: boolean;
 }
 
 function buildSelector(options: ComponentOptions, projectPrefix: string) {
@@ -45,6 +58,7 @@ export default function (options: ComponentOptions): Rule {
         validateHtmlSelector(options.selector);
 
         const templateSource = apply(url('./files'), [
+            options.skipTests ? filter(path => !path.endsWith('.spec.ts.template')) : noop(),
             applyTemplates({
                 ...strings,
                 ...options,

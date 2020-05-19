@@ -31,6 +31,7 @@ function default_1(options) {
         validation_1.validateName(options.name);
         validation_1.validateHtmlSelector(options.selector);
         const templateSource = schematics_1.apply(schematics_1.url('./files'), [
+            options.skipTests ? schematics_1.filter(path => !path.endsWith('.spec.ts.template')) : schematics_1.noop(),
             schematics_1.applyTemplates(Object.assign({}, core_1.strings, options)),
             schematics_1.move(parsedPath.path),
         ]);
