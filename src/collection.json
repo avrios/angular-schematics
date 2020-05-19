@@ -1,6 +1,11 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
+    "api-service": {
+      "description": "Create an Avrios API service",
+      "factory": "./api-service",
+      "schema": "./api-service/schema.json"
+    },
     "component": {
       "description": "Create an Avrios component",
       "factory": "./component",

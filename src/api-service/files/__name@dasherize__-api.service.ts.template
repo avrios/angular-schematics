@@ -1,0 +1,15 @@
+import { Injectable } from '@angular/core';
+
+import { Api, ApiService } from '@shared/core/api.service';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class <%= classify(name) %>ApiService {
+    protected readonly api: Api;
+
+    constructor(apiService: ApiService) {
+        this.api = apiService.init(['']);
+    }
+}
+
