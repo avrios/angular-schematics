@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 import { BaseRouteController } from '@shared/core/base-route.controller';
 
@@ -12,15 +13,20 @@ import { BaseRouteController } from '@shared/core/base-route.controller';
 export class <%= classify(name) %>Component extends BaseRouteController {
     protected readonly pageTitle = [];
 
-    // @ObserveOnDestroy()
-    // private readonly ngOnDestroy$: Observable<void>;
-
-    // @ObserveOnInit()
-    // private readonly ngOnInit$: Observable<void>;
+    private readonly ngOnDestroy$ = new Subject<void>();
 
     constructor(
         translateService: TranslateService
     ) {
         super(translateService);
+    }
+
+    public ngOnDestroy(): void {
+        this.ngOnDestroy$.next();
+        this.ngOnDestroy$.complete();
+    }
+
+    public ngOnInit(): void {
+        //
     }
 }

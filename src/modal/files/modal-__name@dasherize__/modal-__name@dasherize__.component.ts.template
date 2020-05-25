@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { AbstractModal } from '@shared/modals/abstract-modal.class';
 
@@ -15,11 +15,12 @@ export interface Modal<%= classify(name) %>Resolve {
     styleUrls: ['./modal-<%= dasherize(name) %>.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve, Modal<%= classify(name) %>Resolve> {
-    // @ObserveOnInit()
-    // private readonly ngOnInit$: Observable<void>;
-
+export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve, Modal<%= classify(name) %>Resolve> implements OnInit {
     constructor() {
         super();
+    }
+
+    public ngOnInit(): void {
+        //
     }
 }
