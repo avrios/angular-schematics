@@ -1,4 +1,4 @@
-@import 'shared/styles/component-common';
+@import 'libs/shared/src/styles/component-common';
 
 .<%= dasherize(name) %> {
   //
