@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
 import { AbstractModal } from '@shared/modals/abstract-modal.class';
@@ -18,7 +19,7 @@ export interface Modal<%= classify(name) %>Data {
 })
 export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve, Modal<%= classify(name) %>Data> {
     @ObserveOnInit()
-    protected readonly ngOnInit$ = new Subject<void>();
+    protected readonly ngOnInit$: Observable<void>();
 
     constructor() {
         super();

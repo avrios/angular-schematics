@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
 
@@ -11,10 +11,10 @@ import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life
 })
 export class <%= classify(name) %>Component {
     @ObserveOnDestroy()
-    protected readonly ngOnDestroy$ = new Subject<void>();
+    protected readonly ngOnDestroy$: Observable<void>();
 
     @ObserveOnInit()
-    protected readonly ngOnInit$ = new Subject<void>();
+    protected readonly ngOnInit$: Observable<void>();
 
     constructor() {
         //

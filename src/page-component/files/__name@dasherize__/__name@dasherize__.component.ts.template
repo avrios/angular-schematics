@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { BaseRouteController } from '@shared/core/base-route.controller';
 import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
@@ -13,10 +13,10 @@ import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life
 })
 export class <%= classify(name) %>Component extends BaseRouteController {
     @ObserveOnDestroy()
-    protected readonly ngOnDestroy$ = new Subject<void>();
+    protected readonly ngOnDestroy$: Observable<void>();
 
     @ObserveOnInit()
-    protected readonly ngOnInit$ = new Subject<void>();
+    protected readonly ngOnInit$: Observable<void>();
 
     protected readonly pageTitle = [];
 
@@ -24,14 +24,5 @@ export class <%= classify(name) %>Component extends BaseRouteController {
         translateService: TranslateService
     ) {
         super(translateService);
-    }
-
-    public ngOnDestroy(): void {
-        this.ngOnDestroy$.next();
-        this.ngOnDestroy$.complete();
-    }
-
-    public ngOnInit(): void {
-        //
     }
 }
