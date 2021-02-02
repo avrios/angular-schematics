@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
+
+import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
 
 @Component({
     selector: '<%= selector %>',
@@ -7,19 +9,14 @@ import { Subject } from 'rxjs';
     styleUrls: ['./<%= dasherize(name) %>.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class <%= classify(name) %>Component implements OnDestroy, OnInit {
-    private readonly ngOnDestroy$ = new Subject<void>();
+export class <%= classify(name) %>Component {
+    @ObserveOnDestroy()
+    protected readonly ngOnDestroy$ = new Subject<void>();
+
+    @ObserveOnInit()
+    protected readonly ngOnInit$ = new Subject<void>();
 
     constructor() {
-        //
-    }
-
-    public ngOnDestroy(): void {
-        this.ngOnDestroy$.next();
-        this.ngOnDestroy$.complete();
-    }
-
-    public ngOnInit(): void {
         //
     }
 }

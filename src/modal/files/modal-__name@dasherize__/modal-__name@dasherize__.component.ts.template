@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
 import { AbstractModal } from '@shared/modals/abstract-modal.class';
 
 export interface Modal<%= classify(name) %>Resolve {
@@ -15,12 +16,11 @@ export interface Modal<%= classify(name) %>Data {
     styleUrls: ['./modal-<%= dasherize(name) %>.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve, Modal<%= classify(name) %>Data> implements OnInit {
+export class Modal<%= classify(name) %>Component extends AbstractModal<Modal<%= classify(name) %>Resolve, Modal<%= classify(name) %>Data> {
+    @ObserveOnInit()
+    protected readonly ngOnInit$ = new Subject<void>();
+
     constructor() {
         super();
-    }
-
-    public ngOnInit(): void {
-        //
     }
 }
