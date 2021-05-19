@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { BaseRouteController } from '@shared/core/base-route.controller';
-import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life-cycle-hook.decorator';
+import { ObserveOnDestroy } from '@shared/decorators/observe-life-cycle-hook.decorator';
 
 @Component({
     selector: '<%= selector %>',
@@ -14,9 +14,6 @@ import { ObserveOnDestroy, ObserveOnInit } from '@shared/decorators/observe-life
 export class <%= classify(name) %>Component extends BaseRouteController {
     @ObserveOnDestroy()
     protected readonly ngOnDestroy$: Observable<void>;
-
-    @ObserveOnInit()
-    protected readonly ngOnInit$: Observable<void>;
 
     protected readonly pageTitle = [];
 
