@@ -1,0 +1,23 @@
+import { Action, createReducer, on } from '@ngrx/store';
+
+import { createEntityStoreReducers } from '@shared/core/store/store.helpers';
+
+import { <%= classify(name) %>Actions } from './<%= dasherize(name) %>.actions';
+import {
+    <%= classify(name) %>EntityAdapter,
+    <%= classify(name) %>State,
+    Initial<%= classify(name) %>State
+} from './<%= dasherize(name) %>.state';
+
+const reducer = createReducer(
+    Initial<%= classify(name) %>State,
+    ...createEntityStoreReducers<T, <%= classify(name) %>State>(
+        <%= classify(name) %>EntityAdapter,
+        <%= classify(name) %>Actions
+    )
+);
+
+export const <%= classify(name) %>Reducer = (
+    state: <%= classify(name) %>State,
+    action: Action
+) => reducer(state, action);

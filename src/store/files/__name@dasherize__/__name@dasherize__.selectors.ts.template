@@ -1,0 +1,17 @@
+import { createFeatureSelector } from '@ngrx/store';
+
+import { createEntityStoreSelectors } from '@shared/core/store/store.helpers';
+
+import { <%= classify(name) %>EntityAdapter, <%= classify(name) %>State } from './<%= dasherize(name) %>.state';
+
+export namespace <%= classify(name) %>Selectors {
+    export const select<%= classify(name) %>Vehicles = createFeatureSelector<<%= classify(name) %>State>('<%= classify(name) %>');
+
+    export const {
+        selectItems,
+        selectLoading
+    } = createEntityStoreSelectors<T>(
+        <%= classify(name) %>EntityAdapter,
+        select<%= classify(name) %>Vehicles
+    );
+}

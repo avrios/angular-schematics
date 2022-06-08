@@ -1,0 +1,15 @@
+import { createEntityStoreActions } from '@shared/core/store/store.helpers';
+
+const PREFIX = '[<%= classify(name) %>]';
+
+export namespace <%= classify(name) %>Actions {
+    export const {
+        fetchAll,
+        fetchAllSuccess,
+        startLoading,
+        stopLoading,
+        updateItemSuccess,
+        addItemSuccess,
+        removeItemSuccess
+    } = createEntityStoreActions<T>(PREFIX);
+}

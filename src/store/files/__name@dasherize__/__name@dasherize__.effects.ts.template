@@ -1,0 +1,20 @@
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+
+import { EntityStoreEffects } from '@shared/core/store/entity-store.effects';
+
+import { <%= classify(name) %>Actions } from './<%= dasherize(name) %>.actions';
+
+@Injectable()
+export class <%= classify(name) %>Effects extends EntityStoreEffects<T> {
+    constructor(
+        actions: Actions,
+    ) {
+        super(actions, <%= classify(name) %>Actions);
+    }
+
+    public fetchAll(): Observable<T[]> {
+        throw new Error('Needs to be implemented');
+    }
+}

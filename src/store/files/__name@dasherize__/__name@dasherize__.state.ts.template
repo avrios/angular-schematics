@@ -1,0 +1,32 @@
+import { createEntityAdapter } from '@ngrx/entity';
+
+import { getEntityStoreInitialState } from '@shared/core/store/store.helpers';
+import { EntityStoreState } from '@shared/core/store/store.types';
+
+export interface <%= classify(name) %>State extends EntityStoreState<T> {}
+
+export const <%= classify(name) %>EntityAdapter = createEntityAdapter<T>({
+    selectId: entity => entity.uuid
+});
+
+export const Initial<%= classify(name) %>State = getEntityStoreInitialState<T>(
+    <%= classify(name) %>EntityAdapter,
+    {
+        // TODO any additional store you want to provide
+    }
+);
+
+// TODO: Replace <T> with the data type of your store in all files
+
+// TODO: Create an index.ts to export the store files
+//  export * from './<%= dasherize(name) %>.actions';
+//  export * from './<%= dasherize(name) %>.effects';
+//  export * from './<%= dasherize(name) %>.reducer';
+//  export * from './<%= dasherize(name) %>.selectors';
+//  export * from './<%= dasherize(name) %>.state';
+
+// TODO: Add the store to the state module
+//  StoreModule.forFeature('<%= classify(name) %>', <%= classify(name) %>Reducer)
+
+// TODO: Add the effects to a lazy loaded module if needed:
+//  EffectsModule.forFeature([<%= classify(name) %>Effects])
