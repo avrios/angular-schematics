@@ -20,6 +20,11 @@
       "description": "Create an Avrios page component",
       "factory": "./page-component",
       "schema": "./page-component/schema.json"
+    },
+    "store": {
+      "description": "Create an Avrios ngrx store",
+      "factory": "./store",
+      "schema": "./store/schema.json"
     }
   }
 }
