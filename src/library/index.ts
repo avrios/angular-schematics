@@ -1,8 +1,16 @@
-import { experimental } from '@angular-devkit/core';
+import { experimental, strings } from '@angular-devkit/core';
 import {
     Rule,
     SchematicsException,
-    Tree
+    Tree,
+    apply,
+    applyTemplates,
+    chain,
+    mergeWith,
+    move,
+    url,
+    filter,
+    noop
 } from '@angular-devkit/schematics';
 
 import { parseName } from '../utilities/parse-name';
@@ -109,15 +117,18 @@ export default function (options: LibraryOptions): Rule {
         host.overwrite(angularConfigFile, JSON.stringify(workspace));
         host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace));
 
-        // const templateSource = apply(url('./files'), [
-        //     options.skipTests ? filter(path => !path.endsWith('.spec.ts.template')) : noop(),
-        //     applyTemplates({
-        //         ...strings,
-        //         ...options,
-        //     }),
-        //     move(parsedPath.path),
-        // ]);
+        const templateSource = apply(url('./files'), [
+            options.skipTests ? filter(path => !path.endsWith('.spec.ts.template')) : noop(),
+            applyTemplates({
+                ...strings,
+                ...options,
+            }),
+            move(parsedPath.path),
+        ]);
 
-        return host;
+        return chain([
+            _ => host,
+            mergeWith(templateSource)
+        ]);
     };
 }

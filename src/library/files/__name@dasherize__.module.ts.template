@@ -1,0 +1,10 @@
+
+import { NgModule } from '@angular/core';
+import { <%= classify(name) %> } from './<%= classify(name) %>';
+
+@NgModule({
+    [
+        providers: [ <%= classify(name) %> ]
+    ]
+})
+export class <%= classify(name) %>Module {}
