@@ -25,6 +25,11 @@
       "description": "Create an Avrios ngrx store",
       "factory": "./store",
       "schema": "./store/schema.json"
+    },
+    "library": {
+      "description": "Create an Avrios library",
+      "factory": "./library",
+      "schema": "./library/schema.json"
     }
   }
 }
