@@ -1,10 +1,7 @@
-
 import { NgModule } from '@angular/core';
-import { <%= classify(name) %> } from './<%= classify(name) %>';
+import { <%= classify(name) %> } from './<%= dasherize(name) %>';
 
 @NgModule({
-    [
-        providers: [ <%= classify(name) %> ]
-    ]
+    providers: [<%= classify(name) %>]
 })
 export class <%= classify(name) %>Module {}

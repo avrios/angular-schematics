@@ -14,14 +14,12 @@ import {
 } from '@angular-devkit/schematics';
 
 import { parseName } from '../utilities/parse-name';
-import { buildDefaultPath, getProject } from '../utilities/project';
 import { validateName } from '../utilities/validation';
 
 interface LibraryOptions {
     name: string;
     path: string;
     project: string;
-    prefix: string;
     skipTests?: boolean;
 }
 
@@ -46,17 +44,9 @@ export default function (options: LibraryOptions): Rule {
     const nxConfigFile = '/nx.json';
 
     return (host: Tree) => {
-        if (!options.project) {
-            throw new SchematicsException('Option (project) is required.');
-        }
-
-        const project = getProject(host, options.project);
-
-        if (options.path === undefined) {
-            options.path = buildDefaultPath(project);
-        }
-
-        const parsedPath = parseName(options.path, options.name);
+        const dasherizedName = strings.dasherize(options.name);
+        const libSrcPath = `libs/shared/src/lib/${dasherizedName}`;
+        const parsedPath = parseName(libSrcPath, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
 
@@ -79,38 +69,39 @@ export default function (options: LibraryOptions): Rule {
         const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(workspaceContent);
         const nxWorkspace: NxWorkspaceSchema = JSON.parse(nxWorkspaceContent);
 
-        workspace.projects[options.name] = {
-            root: options.path, // libs/shared,
-            sourceRoot: options.path + '/src', // libs/shared/src,
+        const libId = `shared-${dasherizedName}`;
+
+        workspace.projects[libId] = {
+            root: `${libSrcPath}/${dasherizedName}`,
+            sourceRoot: `${libSrcPath}/${dasherizedName}`,
             projectType: 'library',
             schematics: {},
-            prefix: options.prefix || 'avr',
+            prefix: 'avr',
             architect: {
               lint: {
                 builder: '@angular-devkit/build-angular:tslint',
                 options: {
                   tsConfig: [
-                    options.path + '/tsconfig.lib.json', // libs/shared/tsconfig.lib.json,
-                    options.path + '/tsconfig.spec.json', //libs/shared/tsconfig.spec.json,
-                    options.path + '.storybook/tsconfig.json' // libs/shared/.storybook/tsconfig.json
+                    'libs/shared/tsconfig.lib.json',
+                    'libs/shared/tsconfig.spec.json'
                   ],
                   exclude: [
                     '**/node_modules/**',
-                    '!' + options.path + '/**/*'// !libs/shared/**/*
+                    '!libs/shared/**/*'
                   ]
                 }
               },
               test: {
                 builder: '@nrwl/jest:jest',
                 options: {
-                  jestConfig: options.path + '/jest.config.js', // libs/shared/jest.config.js,
+                  jestConfig: `libs/shared/jest.config.js`,
                   passWithNoTests: true
                 }
               }
             }
         };
 
-        nxWorkspace.projects[options.name] = {
+        nxWorkspace.projects[libId] = {
             tags: []
         }
 
