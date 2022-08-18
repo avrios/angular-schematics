@@ -60,7 +60,7 @@ function default_1(options) {
             tags: []
         };
         host.overwrite(angularConfigFile, JSON.stringify(workspace));
-        host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace));
+        host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace, null, 2));
         const templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.skipTests ? schematics_1.filter(path => !path.endsWith('.spec.ts.template')) : schematics_1.noop(),
             schematics_1.applyTemplates(Object.assign({}, core_1.strings, options)),

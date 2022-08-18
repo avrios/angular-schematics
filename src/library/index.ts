@@ -106,7 +106,7 @@ export default function (options: LibraryOptions): Rule {
         }
 
         host.overwrite(angularConfigFile, JSON.stringify(workspace));
-        host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace));
+        host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace, null, 2));
 
         const templateSource = apply(url('./files'), [
             options.skipTests ? filter(path => !path.endsWith('.spec.ts.template')) : noop(),
