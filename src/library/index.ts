@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import { experimental, strings } from '@angular-devkit/core';
 import {
     Rule,
@@ -39,9 +40,21 @@ interface NxWorkspaceSchema {
     }
 }
 
+type CompilerOptions = typeof ts.parseCommandLine extends (...args: any[])=> infer TResult ?
+    TResult extends { options: infer TOptions } ? TOptions : never : never;
+
+interface TsConfigSchema {
+    compileOnSave: boolean;
+    compilerOptions: CompilerOptions;
+    include: string[];
+    exclude: string[];
+    [key: string]: any;
+}
+
 export default function (options: LibraryOptions): Rule {
     const angularConfigFile = '/angular.json';
     const nxConfigFile = '/nx.json';
+    const tsBaseFile = '/tsconfig.base.json';
 
     return (host: Tree) => {
         const dasherizedName = strings.dasherize(options.name);
@@ -54,13 +67,14 @@ export default function (options: LibraryOptions): Rule {
 
         const workspaceConfig = host.read(angularConfigFile);
         const nxWorkspaceConfig = host.read(nxConfigFile);
+        const tsConfig = host.read(tsBaseFile);
 
         if (!workspaceConfig) {
-            throw new SchematicsException('Could not find Angular worspace configuration.');
+            throw new SchematicsException('Could not find Angular workspace configuration.');
         }
 
         if (!nxWorkspaceConfig) {
-            throw new SchematicsException('Could not find NX worspace configuration.');
+            throw new SchematicsException('Could not find NX workspace configuration.');
         }
 
         const workspaceContent = workspaceConfig.toString();
@@ -103,6 +117,18 @@ export default function (options: LibraryOptions): Rule {
 
         nxWorkspace.projects[libId] = {
             tags: []
+        }
+
+        if (tsConfig) {
+            const tsConfigContent = tsConfig.toString();
+            const tsConfigParsed: TsConfigSchema = JSON.parse(tsConfigContent);
+            if (!tsConfigParsed.compilerOptions.paths) {
+                tsConfigParsed.compilerOptions.paths = {};
+            }
+            tsConfigParsed.compilerOptions.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
+            host.overwrite(tsBaseFile, JSON.stringify(tsConfigParsed, null, 2));
+        } else {
+            console.log('Could not find ./tsconfig.base.json configuration. Skipping...');
         }
 
         host.overwrite(angularConfigFile, JSON.stringify(workspace));

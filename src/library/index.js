@@ -7,6 +7,7 @@ const validation_1 = require("../utilities/validation");
 function default_1(options) {
     const angularConfigFile = '/angular.json';
     const nxConfigFile = '/nx.json';
+    const tsBaseFile = '/tsconfig.base.json';
     return (host) => {
         const dasherizedName = core_1.strings.dasherize(options.name);
         const libSrcPath = `libs/shared/src/lib/${dasherizedName}`;
@@ -16,11 +17,12 @@ function default_1(options) {
         validation_1.validateName(options.name);
         const workspaceConfig = host.read(angularConfigFile);
         const nxWorkspaceConfig = host.read(nxConfigFile);
+        const tsConfig = host.read(tsBaseFile);
         if (!workspaceConfig) {
-            throw new schematics_1.SchematicsException('Could not find Angular worspace configuration.');
+            throw new schematics_1.SchematicsException('Could not find Angular workspace configuration.');
         }
         if (!nxWorkspaceConfig) {
-            throw new schematics_1.SchematicsException('Could not find NX worspace configuration.');
+            throw new schematics_1.SchematicsException('Could not find NX workspace configuration.');
         }
         const workspaceContent = workspaceConfig.toString();
         const nxWorkspaceContent = nxWorkspaceConfig.toString();
@@ -59,6 +61,18 @@ function default_1(options) {
         nxWorkspace.projects[libId] = {
             tags: []
         };
+        if (tsConfig) {
+            const tsConfigContent = tsConfig.toString();
+            const tsConfigParsed = JSON.parse(tsConfigContent);
+            if (!tsConfigParsed.compilerOptions.paths) {
+                tsConfigParsed.compilerOptions.paths = {};
+            }
+            tsConfigParsed.compilerOptions.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
+            host.overwrite(tsBaseFile, JSON.stringify(tsConfigParsed, null, 2));
+        }
+        else {
+            console.log('Could not find ./tsconfig.base.json configuration. Skipping...');
+        }
         host.overwrite(angularConfigFile, JSON.stringify(workspace));
         host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace, null, 2));
         const templateSource = schematics_1.apply(schematics_1.url('./files'), [
