@@ -64,7 +64,10 @@ function default_1(options) {
         if (tsConfig) {
             const tsConfigContent = tsConfig.toString();
             const tsConfigParsed = JSON.parse(tsConfigContent);
-            tsConfigParsed.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
+            if (!tsConfigParsed.compilerOptions.paths) {
+                tsConfigParsed.compilerOptions.paths = {};
+            }
+            tsConfigParsed.compilerOptions.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
             host.overwrite(tsBaseFile, JSON.stringify(tsConfigParsed, null, 2));
         }
         else {
