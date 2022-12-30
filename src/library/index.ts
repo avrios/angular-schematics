@@ -109,7 +109,8 @@ export default function (options: LibraryOptions): Rule {
                 builder: '@nrwl/jest:jest',
                 options: {
                   jestConfig: `libs/shared/jest.config.js`,
-                  passWithNoTests: true
+                  passWithNoTests: true,
+                  testPathPattern: [`lib/${dasherizedName}/`]
                 }
               }
             }
