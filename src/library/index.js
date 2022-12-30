@@ -53,7 +53,8 @@ function default_1(options) {
                     builder: '@nrwl/jest:jest',
                     options: {
                         jestConfig: `libs/shared/jest.config.js`,
-                        passWithNoTests: true
+                        passWithNoTests: true,
+                        testPathPattern: [`lib/${dasherizedName}/`]
                     }
                 }
             }
