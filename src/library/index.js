@@ -35,26 +35,20 @@ function default_1(options) {
             projectType: 'library',
             schematics: {},
             prefix: 'avr',
-            architect: {
-                lint: {
-                    builder: '@angular-devkit/build-angular:tslint',
-                    options: {
-                        tsConfig: [
-                            'libs/shared/tsconfig.lib.json',
-                            'libs/shared/tsconfig.spec.json'
-                        ],
-                        exclude: [
-                            '**/node_modules/**',
-                            '!libs/shared/**/*'
-                        ]
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [`libs/shared/src/lib/${dasherizedName}/**/*.ts`, `libs/shared/src/lib/${dasherizedName}/**/*.html`],
+                        "eslintConfig": "libs/shared/.eslintrc.json"
                     }
                 },
-                test: {
-                    builder: '@nrwl/jest:jest',
-                    options: {
-                        jestConfig: `libs/shared/jest.config.js`,
-                        passWithNoTests: true,
-                        testPathPattern: [`lib/${dasherizedName}/`]
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/shared/jest.config.js",
+                        "passWithNoTests": true,
+                        "testPathPattern": [`lib/${dasherizedName}/`]
                     }
                 }
             }
