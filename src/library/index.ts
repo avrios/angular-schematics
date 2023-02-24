@@ -126,7 +126,7 @@ export default function (options: LibraryOptions): Rule {
             if (!tsConfigParsed.compilerOptions.paths) {
                 tsConfigParsed.compilerOptions.paths = {};
             }
-            tsConfigParsed.compilerOptions.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
+            tsConfigParsed.compilerOptions.paths[`@shared/${dasherizedName}/*`] = [`libs/shared/src/lib/${dasherizedName}/*`];
             host.overwrite(tsBaseFile, JSON.stringify(tsConfigParsed, null, 2));
         } else {
             console.log('Could not find ./tsconfig.base.json configuration. Skipping...');
