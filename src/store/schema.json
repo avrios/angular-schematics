@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsAngularNgrxStore",
+  "$id": "SchematicsAngularNgrxStore",
   "title": "Angular Store Options Schema",
   "type": "object",
   "description": "Creates a new generic ngrx store definition in the given or default project.",

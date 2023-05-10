@@ -11,10 +11,10 @@ function default_1(options) {
     return (host) => {
         const dasherizedName = core_1.strings.dasherize(options.name);
         const libSrcPath = `libs/shared/src/lib/${dasherizedName}`;
-        const parsedPath = parse_name_1.parseName(libSrcPath, options.name);
+        const parsedPath = (0, parse_name_1.parseName)(libSrcPath, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        validation_1.validateName(options.name);
+        (0, validation_1.validateName)(options.name);
         const workspaceConfig = host.read(angularConfigFile);
         const nxWorkspaceConfig = host.read(nxConfigFile);
         const tsConfig = host.read(tsBaseFile);
@@ -35,20 +35,26 @@ function default_1(options) {
             projectType: 'library',
             schematics: {},
             prefix: 'avr',
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [`libs/shared/src/lib/${dasherizedName}/**/*.ts`, `libs/shared/src/lib/${dasherizedName}/**/*.html`],
-                        "eslintConfig": "libs/shared/.eslintrc.json"
+            architect: {
+                lint: {
+                    builder: '@angular-devkit/build-angular:tslint',
+                    options: {
+                        tsConfig: [
+                            'libs/shared/tsconfig.lib.json',
+                            'libs/shared/tsconfig.spec.json'
+                        ],
+                        exclude: [
+                            '**/node_modules/**',
+                            '!libs/shared/**/*'
+                        ]
                     }
                 },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "options": {
-                        "jestConfig": "libs/shared/jest.config.js",
-                        "passWithNoTests": true,
-                        "testPathPattern": [`lib/${dasherizedName}/`]
+                test: {
+                    builder: '@nrwl/jest:jest',
+                    options: {
+                        jestConfig: `libs/shared/jest.config.js`,
+                        passWithNoTests: true,
+                        testPathPattern: [`lib/${dasherizedName}/`]
                     }
                 }
             }
@@ -62,7 +68,7 @@ function default_1(options) {
             if (!tsConfigParsed.compilerOptions.paths) {
                 tsConfigParsed.compilerOptions.paths = {};
             }
-            tsConfigParsed.compilerOptions.paths[`@shared/${libId}/*`] = [`libs/shared/src/lib/${libId}/*`];
+            tsConfigParsed.compilerOptions.paths[`@shared/${dasherizedName}/*`] = [`libs/shared/src/lib/${dasherizedName}/*`];
             host.overwrite(tsBaseFile, JSON.stringify(tsConfigParsed, null, 2));
         }
         else {
@@ -70,14 +76,14 @@ function default_1(options) {
         }
         host.overwrite(angularConfigFile, JSON.stringify(workspace));
         host.overwrite(nxConfigFile, JSON.stringify(nxWorkspace, null, 2));
-        const templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            options.skipTests ? schematics_1.filter(path => !path.endsWith('.spec.ts.template')) : schematics_1.noop(),
-            schematics_1.applyTemplates(Object.assign({}, core_1.strings, options)),
-            schematics_1.move(parsedPath.path),
+        const templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
+            options.skipTests ? (0, schematics_1.filter)(path => !path.endsWith('.spec.ts.template')) : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(Object.assign(Object.assign({}, core_1.strings), options)),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
+        return (0, schematics_1.chain)([
             _ => host,
-            schematics_1.mergeWith(templateSource)
+            (0, schematics_1.mergeWith)(templateSource)
         ]);
     };
 }

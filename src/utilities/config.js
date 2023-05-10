@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getAppFromConfig = exports.getConfig = exports.configPath = exports.updateWorkspace = exports.getWorkspace = exports.getWorkspacePath = void 0;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -7,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const core_1 = require("@angular-devkit/core");
+const parser_1 = require("@angular-devkit/core/src/json/parser");
 const schematics_1 = require("@angular-devkit/schematics");
 function getWorkspacePath(host) {
     const possibleFiles = ['/angular.json', '/.angular.json'];
@@ -22,24 +23,9 @@ function getWorkspace(host) {
         throw new schematics_1.SchematicsException(`Could not find (${path})`);
     }
     const content = configBuffer.toString();
-    return core_1.parseJson(content, core_1.JsonParseMode.Loose);
+    return (0, parser_1.parseJson)(content, parser_1.JsonParseMode.Loose);
 }
 exports.getWorkspace = getWorkspace;
-function addProjectToWorkspace(workspace, name, project) {
-    return (_host, _context) => {
-        if (workspace.projects[name]) {
-            throw new Error(`Project '${name}' already exists in workspace.`);
-        }
-        // Add project to workspace.
-        workspace.projects[name] = project;
-        if (!workspace.defaultProject && Object.keys(workspace.projects).length === 1) {
-            // Make the new project the default one.
-            workspace.defaultProject = name;
-        }
-        return updateWorkspace(workspace);
-    };
-}
-exports.addProjectToWorkspace = addProjectToWorkspace;
 function updateWorkspace(workspace) {
     return (host, _context) => {
         host.overwrite(getWorkspacePath(host), JSON.stringify(workspace, null, 2));
@@ -52,7 +38,7 @@ function getConfig(host) {
     if (configBuffer === null) {
         throw new schematics_1.SchematicsException('Could not find .angular-cli.json');
     }
-    const config = core_1.parseJson(configBuffer.toString(), core_1.JsonParseMode.Loose);
+    const config = (0, parser_1.parseJson)(configBuffer.toString(), parser_1.JsonParseMode.Loose);
     return config;
 }
 exports.getConfig = getConfig;
