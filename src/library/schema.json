@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsAngularComponent",
+    "$id": "SchematicsAngularComponent",
     "title": "Angular Library Options Schema",
     "type": "object",
     "description": "Creates a new generic Library definition in the given or default project.",

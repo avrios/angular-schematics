@@ -5,9 +5,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { JsonParseMode, parseJson } from '@angular-devkit/core';
+import { JsonParseMode, parseJson } from '@angular-devkit/core/src/json/parser';
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { ProjectType, WorkspaceProject, WorkspaceSchema } from './workspace-models';
+import { WorkspaceSchema } from './workspace-models';
 
 // The interfaces below are generated from the Angular CLI configuration schema
 // https://github.com/angular/angular-cli/blob/master/packages/@angular/cli/lib/config/schema.json
@@ -494,29 +494,6 @@ export function getWorkspace(host: Tree): WorkspaceSchema {
   const content = configBuffer.toString();
 
   return parseJson(content, JsonParseMode.Loose) as {} as WorkspaceSchema;
-}
-
-export function addProjectToWorkspace<TProjectType extends ProjectType = ProjectType.Application>(
-  workspace: WorkspaceSchema,
-  name: string,
-  project: WorkspaceProject<TProjectType>,
-): Rule {
-  return (_host: Tree, _context: SchematicContext) => {
-
-    if (workspace.projects[name]) {
-      throw new Error(`Project '${name}' already exists in workspace.`);
-    }
-
-    // Add project to workspace.
-    workspace.projects[name] = project;
-
-    if (!workspace.defaultProject && Object.keys(workspace.projects).length === 1) {
-      // Make the new project the default one.
-      workspace.defaultProject = name;
-    }
-
-    return updateWorkspace(workspace);
-  };
 }
 
 export function updateWorkspace(workspace: WorkspaceSchema): Rule {

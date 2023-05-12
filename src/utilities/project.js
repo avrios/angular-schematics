@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isWorkspaceProject = exports.isWorkspaceSchema = exports.getProject = exports.buildDefaultPath = void 0;
 const config_1 = require("./config");
 const workspace_models_1 = require("./workspace-models");
 /**
@@ -17,7 +18,7 @@ exports.buildDefaultPath = buildDefaultPath;
 function getProject(workspaceOrHost, projectName) {
     const workspace = isWorkspaceSchema(workspaceOrHost)
         ? workspaceOrHost
-        : config_1.getWorkspace(workspaceOrHost);
+        : (0, config_1.getWorkspace)(workspaceOrHost);
     return workspace.projects[projectName];
 }
 exports.getProject = getProject;

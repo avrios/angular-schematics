@@ -52,7 +52,7 @@ export default function (options: ComponentOptions): Rule {
         const parsedPath = parseName(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        options.selector = options.selector || buildSelector(options, project.prefix);
+        options.selector = options.selector || buildSelector(options, project.prefix ?? '');
 
         validateName(options.name);
         validateHtmlSelector(options.selector);

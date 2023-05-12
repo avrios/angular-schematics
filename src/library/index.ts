@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { experimental, strings } from '@angular-devkit/core';
+import { strings } from '@angular-devkit/core';
 import {
     Rule,
     SchematicsException,
@@ -80,7 +80,7 @@ export default function (options: LibraryOptions): Rule {
         const workspaceContent = workspaceConfig.toString();
         const nxWorkspaceContent = nxWorkspaceConfig.toString();
 
-        const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(workspaceContent);
+        const workspace = JSON.parse(workspaceContent);
         const nxWorkspace: NxWorkspaceSchema = JSON.parse(nxWorkspaceContent);
 
         const libId = `shared-${dasherizedName}`;

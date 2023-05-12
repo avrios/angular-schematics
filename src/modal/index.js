@@ -17,26 +17,27 @@ function buildSelector(options, projectPrefix) {
 }
 function default_1(options) {
     return (host) => {
+        var _a;
         if (!options.project) {
             throw new schematics_1.SchematicsException('Option (project) is required.');
         }
-        const project = project_1.getProject(host, options.project);
+        const project = (0, project_1.getProject)(host, options.project);
         if (options.path === undefined) {
-            options.path = project_1.buildDefaultPath(project);
+            options.path = (0, project_1.buildDefaultPath)(project);
         }
-        const parsedPath = parse_name_1.parseName(options.path, options.name);
+        const parsedPath = (0, parse_name_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        options.selector = options.selector || buildSelector(options, project.prefix);
-        validation_1.validateName(options.name);
-        validation_1.validateHtmlSelector(options.selector);
-        const templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            options.skipTests ? schematics_1.filter(path => !path.endsWith('.spec.ts.template')) : schematics_1.noop(),
-            schematics_1.applyTemplates(Object.assign({}, core_1.strings, options)),
-            schematics_1.move(parsedPath.path),
+        options.selector = options.selector || buildSelector(options, (_a = project.prefix) !== null && _a !== void 0 ? _a : '');
+        (0, validation_1.validateName)(options.name);
+        (0, validation_1.validateHtmlSelector)(options.selector);
+        const templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
+            options.skipTests ? (0, schematics_1.filter)(path => !path.endsWith('.spec.ts.template')) : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(Object.assign(Object.assign({}, core_1.strings), options)),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
-            schematics_1.mergeWith(templateSource)
+        return (0, schematics_1.chain)([
+            (0, schematics_1.mergeWith)(templateSource)
         ]);
     };
 }

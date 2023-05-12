@@ -10,20 +10,20 @@ function default_1(options) {
         if (!options.project) {
             throw new schematics_1.SchematicsException('Option (project) is required.');
         }
-        const project = project_1.getProject(host, options.project);
+        const project = (0, project_1.getProject)(host, options.project);
         if (options.path === undefined) {
-            options.path = project_1.buildDefaultPath(project);
+            options.path = (0, project_1.buildDefaultPath)(project);
         }
-        const parsedPath = parse_name_1.parseName(options.path, options.name);
+        const parsedPath = (0, parse_name_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        validation_1.validateName(options.name);
-        const templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            schematics_1.applyTemplates(Object.assign({}, core_1.strings, options)),
-            schematics_1.move(parsedPath.path),
+        (0, validation_1.validateName)(options.name);
+        const templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
+            (0, schematics_1.applyTemplates)(Object.assign(Object.assign({}, core_1.strings), options)),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
-            schematics_1.mergeWith(templateSource)
+        return (0, schematics_1.chain)([
+            (0, schematics_1.mergeWith)(templateSource)
         ]);
     };
 }
