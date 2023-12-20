@@ -30,6 +30,11 @@
       "description": "Create an Avrios library",
       "factory": "./library",
       "schema": "./library/schema.json"
+    },
+    "extract-app-libs": {
+      "description": "Extract app libs from an Avrios project",
+      "factory": "./extract-app-libs",
+      "schema": "./extract-app-libs/schema.json"
     }
   }
 }

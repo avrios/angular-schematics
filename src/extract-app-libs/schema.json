@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "SchematicsAngularComponent",
+    "title": "Angular Extract libraries",
+    "type": "object",
+    "description": "Generates libraries for a specific Avrio's app scope.",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "The name of the project this libraries belong to. If none given then the libraries are added to the the shared scope.",
+        "$default": {
+          "$source": "argv",
+          "index": 0
+        },
+        "x-prompt": {
+          "message": "What is the name of the project you want to Extract?",
+          "type": "string"
+        }
+      },
+      "namespace": {
+        "type": "string",
+        "description": "The namespace of the Library. Normally matches the project name.",
+        "$default": {
+          "$source": "argv",
+          "index": 1
+        },
+        "x-prompt": "What namespace would you like to use for the Libraries?"
+      },
+      "tags": {
+        "type": "string",
+        "description": "The list of tags the libraries are allowed to use.",
+        "$default": {
+          "$source": "argv",
+          "index": 2
+        },
+        "x-prompt": "Enter the set of tags that determine the boundaries of the libraries, delimited by comma. You can check the available list of tags in .eslintrc file. Ex: scope:shared."
+      },
+      "prefix": {
+        "type": "string",
+        "description": "The prefix to apply to the generated libraries.",
+        "alias": "p",
+        "default": "avr",
+        "oneOf": [
+          {
+            "maxLength": 0
+          },
+          {
+            "minLength": 1,
+            "format": "html-selector"
+          }
+        ]
+      }
+    },
+    "required": [
+      "name"
+    ]
+  }
